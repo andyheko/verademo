@@ -655,7 +655,12 @@ public class UserController {
 
 		logger.info("User is Logged In - continuing...");
 
-		String path = context.getRealPath("/resources/images") + File.separator + imageName;
+		String path = context.getRealPath("/resources/images");
+		if (imageName.contains("..")) {
+			System.out.println("detected : malicious input path");
+		} else {
+			path += File.separator + imageName;
+		}
 
 		logger.info("Fetching profile image: " + path);
 

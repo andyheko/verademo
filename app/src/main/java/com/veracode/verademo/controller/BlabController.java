@@ -226,6 +226,12 @@ public class BlabController {
 			logger.info("Preparing the addBlab Prepared Statement");
 			addBlab = connect.prepareStatement(addBlabSql);
 			addBlab.setString(1, username);
+
+			if (blab.toLowerCase().contains("<script>")) {
+				System.out.println("detected: malicious XSS attack");
+				blab = "I have potential malicious content in my post.";
+			}
+
 			addBlab.setString(2, blab);
 			addBlab.setTimestamp(3, new Timestamp(now.getTime()));
 
